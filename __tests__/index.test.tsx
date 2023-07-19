@@ -31,4 +31,22 @@ describe("Todo App", () => {
       expect(todoList).toHaveTextContent("New Todo");
     });
   });
+
+  it("deletes a todo", async () => {
+    render(<Home />);
+
+    const todoInput = screen.getByTestId("todo-input");
+    const addTodoButton = screen.getByTestId("add-todo");
+
+    fireEvent.change(todoInput, { target: { value: "Todo 1" } });
+    fireEvent.click(addTodoButton);
+
+    const deleteTodoButton = screen.getByTestId("delete-todo-0");
+    fireEvent.click(deleteTodoButton);
+
+    const todoList = screen.getByTestId("todo-list");
+    await waitFor(() => {
+      expect(todoList).toBeEmptyDOMElement();
+    });
+  });
 });
