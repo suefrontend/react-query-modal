@@ -28,6 +28,26 @@ export default function Home({ products, categories }) {
           title="Search"
           placeholder="Search products"
         />
+
+        <ul aria-label="Categories">
+          {categories.map((category) => {
+            return (
+              <li aria-label="category" key={category.id}>
+                <h2 id={`category-${category.name}`}>{category.name}</h2>
+                <ul area-labelledby={`category-${category.name}`}>
+                  {products
+                    .filter((product) =>
+                      product.categories.find((c) => c.id === category.id)
+                    )
+                    .map((product) => {
+                      return <li key={product.id}>{product.name}</li>;
+                    })}
+                </ul>
+              </li>
+            );
+          })}
+        </ul>
+
         <h2 id="all-products-heading">All products</h2>
         <ul aria-labelledby="all-products-heading">
           {products.map((product) => {

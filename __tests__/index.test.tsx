@@ -9,6 +9,7 @@ import {
   within,
 } from "@testing-library/react";
 import { mockProducts } from "../__mocks__/mockProduct";
+import { mockCategories } from "../__mocks__/mockData";
 
 describe("Home page", () => {
   it("render all products heading", () => {
@@ -28,5 +29,13 @@ describe("Home page", () => {
     const { getAllByRole } = within(allProducts);
     const listitems = getAllByRole("listitem");
     expect(listitems.length).toBe(3);
+  });
+
+  it("renders all categories", () => {
+    render(<Home products={mockProducts} categories={mockCategories} />);
+    const allCategories = screen.getByRole("list", { name: /categories/i });
+    const { getAllByRole } = within(allCategories);
+    const listitems = getAllByRole("listitem", { name: /category/i });
+    expect(listitems.length).toBe(2);
   });
 });
