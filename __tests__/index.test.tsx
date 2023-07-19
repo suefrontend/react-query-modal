@@ -1,14 +1,34 @@
-import { render, screen } from '@testing-library/react'
-import Home from '@/pages/index'
+import Home from "@/pages/index";
+import "@testing-library/jest-dom";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  act,
+} from "@testing-library/react";
 
-describe('Home', () => {
-  it('renders a heading', () => {
-    render(<Home />)
+describe("Todo App", () => {
+  it("renders the todo app", () => {
+    render(<Home />);
 
-    const heading = screen.getByRole('heading', {
-      name: /welcome to next\.js!/i,
-    })
+    expect(screen.getByTestId("todo-input")).toBeInTheDocument();
+    expect(screen.getByTestId("add-todo")).toBeInTheDocument();
+  });
 
-    expect(heading).toBeInTheDocument()
-  })
-})
+  it("adds a todo", async () => {
+    render(<Home />);
+
+    const todoInput = screen.getByTestId("todo-input");
+    const addTodoButton = screen.getByTestId("add-todo");
+    const todoList = screen.getByTestId("todo-list");
+    await act(async () => {
+      fireEvent.change(todoInput, { target: { value: "New Todo" } });
+      addTodoButton.click();
+    });
+
+    await waitFor(() => {
+      expect(todoList).toHaveTextContent("New Todo");
+    });
+  });
+});
