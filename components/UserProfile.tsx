@@ -6,7 +6,12 @@ export const UserProfile = ({
 }) => (
   <div>
     <div>
-      <span>Display name: {displayName}</span>
+      <span>
+        Display Name:{" "}
+        {displayName.length > 30
+          ? displayName.slice(0, 28).concat("...")
+          : displayName}
+      </span>
     </div>
     <div>
       <span>Username: {userName}</span>

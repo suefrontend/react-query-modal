@@ -1,8 +1,12 @@
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
+import { UserProfile } from "@/components/UserProfile";
+import UserList from "@/components/UserList";
+import LoginForm from "@/components/LoginForm";
 
 export default function Home() {
   const [showText, setShowText] = useState(false);
+  const handleOnChange = () => {};
   return (
     <div className={styles.main}>
       <h1>Home Page</h1>
@@ -19,7 +23,7 @@ export default function Home() {
         <input placeholder="Search..." />
       </div>
       <div>
-        <input value="AUDI" />
+        <input value="AUDI" onChange={handleOnChange} />
       </div>
       <div>
         <button
@@ -33,6 +37,14 @@ export default function Home() {
         </button>
         {showText && "This is the text"}
       </div>
+      <UserProfile
+        displayName="Kayak Kayak Kayak Kayak Kayak Kayak"
+        userName="kayano"
+        email="kayano@test.com"
+        isEmailVerified={false}
+      />
+      <UserList />
+      <LoginForm />
     </div>
   );
 }

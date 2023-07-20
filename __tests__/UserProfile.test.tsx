@@ -5,7 +5,7 @@ describe("UserProfile - Rendering", () => {
   it("should have text Email verified when isEmailVerified is true", () => {
     render(
       <UserProfile
-        displayName="Kayano"
+        displayName="KayanoKayanoKayanoKayanoKayanoKayanoKayanoKayano"
         userName="kayak"
         email="kayano@test.com"
         isEmailVerified={true}
@@ -26,5 +26,31 @@ describe("UserProfile - Rendering", () => {
     );
     expect(screen.queryByText("Email Verified")).not.toBeInTheDocument();
     expect(screen.getByText("Email Not Verified")).toBeInTheDocument();
+  });
+
+  it("should have display name end with three dots when length is greater than 30 characters", () => {
+    render(
+      <UserProfile
+        displayName="Kayano Kayano Kayano Kayano Kayano Kayano"
+        userName="kayak"
+        email="kayano@test.com"
+        isEmailVerified={false}
+      />
+    );
+    const displayNameSpanElement = screen.getByText(/Display Name: /);
+    expect(displayNameSpanElement).toHaveTextContent(/.*\.\.\./);
+  });
+
+  it("should not have display name end with three dots when length is greater than 30 characters", () => {
+    render(
+      <UserProfile
+        displayName="Kayano"
+        userName="kayak"
+        email="kayano@test.com"
+        isEmailVerified={false}
+      />
+    );
+    const displayNameSpanElement = screen.getByText(/Display Name: /);
+    expect(displayNameSpanElement).not.toHaveTextContent(/.*\.\.\./);
   });
 });
