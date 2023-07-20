@@ -22,7 +22,15 @@ export default function Home() {
         <input value="AUDI" />
       </div>
       <div>
-        <button onClick={() => setShowText(!showText)}>Show Text</button>
+        <button
+          onClick={() => {
+            setTimeout(() => {
+              setShowText(!showText);
+            }, 1100);
+          }}
+        >
+          Show Text
+        </button>
         {showText && "This is the text"}
       </div>
     </div>

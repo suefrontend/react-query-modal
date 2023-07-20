@@ -1,4 +1,5 @@
-import { getByDisplayValue, render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Home from "../pages";
 
 describe("Home page - rendering", () => {
@@ -38,6 +39,21 @@ describe("Home page - rendering", () => {
     it("should not find element with text: This is the text", () => {
       render(<Home />);
       expect(screen.queryByText("This is the text")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Behavior", () => {
+    it("should click on Show Text button and find new text", async () => {
+      render(<Home />);
+      expect(screen.queryByText("THis is the text")).not.toBeInTheDocument();
+      const showTextButton = screen.getByRole("button", { name: "Show Text" });
+      await userEvent.click(showTextButton);
+      await waitFor(
+        () => {
+          expect(screen.getByText("This is the text")).toBeInTheDocument();
+        },
+        { timeout: 1200 }
+      );
     });
   });
 });
